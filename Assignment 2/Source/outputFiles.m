@@ -1,15 +1,7 @@
-function testAssignment2()
+function outputFiles(k, d, filenames, baseOutputPath)
 
 % Defining folders for input and output images:
 baseInputPath = '../Resources/';
-baseOutputPath = '../Output/';
-
-% Defining filenames of the input and output images
-filenames = [ 
-    {'simple.png'} ;
-    {'future.jpg'} ;
-    {'mm.jpg'} ;
-    ];
 
 % Create output folder if it doesn't exist:
 if ~exist(baseOutputPath, 'dir')
@@ -26,17 +18,14 @@ for i = 1 : rowCount
     image = imread(strcat(baseInputPath, filename));
     
     % Use the k-means algortithm on the image:
-    outputImage = assignment2(image, 3, 5, true);
+    outputImage = assignment2(image, k, d, true);
     
     % Write the k-means colored image:
-    imwrite(outputImage, strcat(baseOutputPath, filename));
+    kStr = strcat('k', num2str(k));
+    dStr = strcat('d', num2str(d));
+    prefix = strcat(strcat(kStr, dStr), '_');
+    imwrite(outputImage, strcat(baseOutputPath, strcat(prefix, filename)));
 
 end
 
 end
-
-
-
-
-
-

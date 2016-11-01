@@ -18,7 +18,7 @@ while ~done
     % Compute the distortion measure and check if there are significant
     % changes:
     newDistortionMeasure = calculateDistortionMeasure(dataPoints, centroids, centroidAssignments);
-    if(abs(oldDistortionMeasure / newDistortionMeasure - 1.0) < 0.00001)
+    if(abs(oldDistortionMeasure / newDistortionMeasure - 1.0) < 0.0000001)
         done = true;
     end
     oldDistortionMeasure = newDistortionMeasure;

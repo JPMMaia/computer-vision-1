@@ -46,19 +46,19 @@ for i = 1:height
 end
 
 % If draw circles flag is enabled:
-if drawCircles
-    
-    color = uint8([0 0 0]);
-    shapeInserter = vision.ShapeInserter('Shape', 'Circles', 'BorderColor', 'Custom', 'CustomBorderColor', color);
-    
-    circles = zeros(k,3);
-    for i=1:k
-        circles(i,:)= int32([centroids(i,5).*height, centroids(i,4).*width, 20]);
-    end
- 
-    % Draw the circles on the output image:
-    outputImage = shapeInserter(outputImage, circles);  
-    
-end
+% if drawCircles
+%     
+%     color = uint8([0 0 0]);
+%     shapeInserter = vision.ShapeInserter('Shape', 'Circles', 'BorderColor', 'Custom', 'CustomBorderColor', color);
+%     
+%     circles = zeros(k,3);
+%     for i=1:k
+%         circles(i,:)= int32([centroids(i,5).*height, centroids(i,4).*width, 20]);
+%     end
+%  
+%     % Draw the circles on the output image:
+%     outputImage = shapeInserter(outputImage, circles);  
+%     
+% end
 
 end
