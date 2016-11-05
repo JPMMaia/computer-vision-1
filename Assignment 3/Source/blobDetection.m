@@ -25,18 +25,25 @@ absolute_scale_space = abs(scale_space);
 
 max_space = zeros(height,width,levels);
 
-filterMatrix = [1,1,1;1,0,1;1,1,1];
+filterMatrix1 = [1,1,1;1,1,1;1,1,1];
+filterMatrix2 = [1,1,1;1,0,1;1,1,1];
 
-for currLevel = 1 : levels
-% TODO: implement 3d comparison
+for currLevel = 2 : levels - 1 
+    upLvlOrdFilt = ordfilt2(absolute_scale_space(:,:,currLevel-1),9,filterMatrix1);
+    cLvlOrdFilt = ordfilt2(absolute_scale_space(:,:,currLevel),8,filterMatrix2);
+    downLvlOrdFilt = ordfilt2(absolute_scale_space(:,:,currLevel+1),9,filterMatrix1);
     
-    max_space(:,:,currLevel) = ordfilt2(absolute_scale_space(:,:,currLevel),8,filterMatrix);
+    for y = 1 : height
+        for x = 1 : width
+            max_space(y,x,currLevel) = max([upLvlOrdFilt(y,x),cLvlOrdFilt(y,x),downLvlOrdFilt(y,x)]);
+        end
+    end
     
 end
 
 circles = zeros(height,width);
 
-for currLevel = 1 : levels
+for currLevel = 2 : levels-1
     for y = 1 : height
         for x = 1 : width
            if ( absolute_scale_space(y,x,currLevel) > threshold && absolute_scale_space(y,x,currLevel) > max_space(y,x,currLevel))
