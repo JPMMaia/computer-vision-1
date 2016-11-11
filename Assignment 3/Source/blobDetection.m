@@ -1,19 +1,20 @@
-function [outputImage] = blobDetection(image, sigma, k, levels, threshold)
+function blobDetection(image, sigma, k, levels, threshold)
 
 originalSigma = sigma;
 [height, width] = size(image);
 
 % [height,width] - dimensions of image
 % levels - number of levels in the scale space
-scale_space = zeros(height,width,levels);
+scale_space = zeros(height, width, levels);
 
-    % 1. Start with an initial scale ?0 and repeatedly increase the scale by a constant factor k
-for currLevel = 1 : levels    
-        % Build a scale-normalized Laplacian of Gaussian filter with current scale ?.
+% 1. Start with an initial scale sigma0 and repeatedly increase the scale by a constant factor k
+for currLevel = 1 : levels 
+    
+        % Build a scale-normalized Laplacian of Gaussian filter with current scale sigma.
         filter = fspecial('log', 2*floor(3*sigma) + 1, sigma) .* sigma^2;
     
-        %Convolve the image with the filter and save the absolute response of LoG for the current level of scale space.
-        convulution = imfilter (image,filter,'same','replicate');
+        % Convolve the image with the filter and save the absolute response of LoG for the current level of scale space.
+        convulution = imfilter (image, filter, 'same', 'replicate');
         
         scale_space(:, :, currLevel) = convulution;
         
@@ -53,10 +54,9 @@ for currLevel = 2 : levels-1
     end
 end
 
-[cy,cx,radii] = find(circles);
+[cy, cx, radii] = find(circles);
 radii = radii .* sqrt(2);
 
 show_all_circles(image,cx,cy,radii);
-outputImage = zeros(1);
 
 end
