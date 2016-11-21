@@ -5,15 +5,13 @@ baseInputPath = '../Resources/';
 
 filenames = [ 
     {'butterfly.jpg'} ;
-    %{ 'BlackImage.bmp' } ;
-    %{ 'WhiteImage.png' } ;
-    %{'circles.bmp'} ;
+    %{ 'go.jpg' } ;
 ];
 
 sigma = 2.0;
 k = 1.25;
 levels = 10;
-threshold = 0.5;
+threshold = 0.25;
 
 % For each row of the filenames vector:
 rowCount = size(filenames, 1);
