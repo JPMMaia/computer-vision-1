@@ -5,9 +5,6 @@ imageDimensions = size(image);
 width = imageDimensions(1);
 height = imageDimensions(2);
 
-% Normalize image values:
-normalizedImage = image ./ 255;
-
 % Create data points from the image matrix:
 dataPoints = zeros(width * height, dataPointDimensions);
 dataPointIndex = 1;
@@ -15,9 +12,9 @@ for i = 1:height
     for j = 1:width
         
         % Building a data point consiting of RGB values:
-        dataPoints(dataPointIndex, 1) = normalizedImage(j, i, 1);
-        dataPoints(dataPointIndex, 2) = normalizedImage(j, i, 2);
-        dataPoints(dataPointIndex, 3) = normalizedImage(j, i, 3);
+        dataPoints(dataPointIndex, 1) = image(j, i, 1);
+        dataPoints(dataPointIndex, 2) = image(j, i, 2);
+        dataPoints(dataPointIndex, 3) = image(j, i, 3);
         
         % If we are working on 5D data points, add the position of the
         % pixel on the image matrix:
@@ -40,7 +37,7 @@ outputImage = zeros(width, height, 3);
 dataPointIndex = 1;
 for i = 1:height
     for j = 1:width
-        outputImage(j, i, :) = centroids(centroidAssignments(dataPointIndex), 1:3) .* 255;
+        outputImage(j, i, :) = centroids(centroidAssignments(dataPointIndex), 1:3);
         dataPointIndex = dataPointIndex + 1;
     end
 end
