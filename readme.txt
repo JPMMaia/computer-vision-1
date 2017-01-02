@@ -1,1 +1,1 @@
-Computer Vision - assignment 1
+Computer Vision course

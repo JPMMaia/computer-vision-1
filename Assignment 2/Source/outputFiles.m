@@ -16,6 +16,7 @@ for i = 1 : rowCount
     
     % Read the image:
     image = imread(strcat(baseInputPath, filename));
+    image = double(image) ./ 255;
     
     % Use the k-means algortithm on the image:
     outputImage = assignment2(image, k, d, true);

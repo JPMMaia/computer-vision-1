@@ -5,13 +5,13 @@ baseInputPath = '../Resources/';
 
 filenames = [ 
     {'butterfly.jpg'} ;
-    %{'circles.bmp'} ;
+    %{ 'go.jpg' } ;
 ];
 
-sigma = 3.0;
+sigma = 2.0;
 k = 1.25;
 levels = 10;
-threshold = 0.9;
+threshold = 0.25;
 
 % For each row of the filenames vector:
 rowCount = size(filenames, 1);
@@ -19,13 +19,13 @@ for i = 1 : rowCount
 
     filename = char(filenames(i, 1));
     
-    % Read the image:
-    image = imread(strcat(baseInputPath, filename));
+    % Read the image and normalized it between 0 and 1:
+    image = mean(imread(strcat(baseInputPath, filename)), 3);
+    image = image - min(image(:)) ;
+    image = image / max(image(:)) ;
     
     % Use the k-means algortithm on the image:
     blobDetection(image, sigma, k, levels, threshold);
-    
-    % Advance only when keyboard key is pressed:
     while(waitforbuttonpress ~= 1)
     end
     
