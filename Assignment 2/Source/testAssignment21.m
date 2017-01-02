@@ -1,4 +1,4 @@
-function testAssignment21()
+                                function testAssignment21()
 
 filenames = [ 
     {'simple.png'} ;
