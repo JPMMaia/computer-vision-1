@@ -1,4 +1,4 @@
-function stitching (images, matchingThreshold, distanceThreshold, iterationCount)
+function matching (images, matchingThreshold, distanceThreshold, iterationCount)
 
 image1 = images{1};
 image2 = images{2};
@@ -97,11 +97,8 @@ try
     C = imfuse(image1, B, 'diff');
     imshow(C);
 catch 
-    stitching(images, matchingThreshold, distanceThreshold, iterationCount);
+    matching(images, matchingThreshold, distanceThreshold, iterationCount);
 end
 
 end
 
-function estimateHomography ()
-
-end
