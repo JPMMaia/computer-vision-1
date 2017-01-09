@@ -1,4 +1,4 @@
-function matching (images, matchingThreshold, distanceThreshold, iterationCount)
+function best_transform = matching (images, matchingThreshold, distanceThreshold, iterationCount)
 
 image1 = images{1};
 image2 = images{2};
@@ -15,6 +15,9 @@ randomMatchesList = zeros(2,4,iterationCount);
 
 % Number of matches:
 matchCount = size(matches, 2);
+
+current_best_transform = -1;
+current_best_score = 0;
 
 for n = 1 : iterationCount
     
@@ -48,28 +51,34 @@ for n = 1 : iterationCount
         
         inliersCount(n) = nnz(small_distances);
         
+        if (nnz(small_distances) > current_best_score)
+            current_best_transform = t;
+            current_best_score = nnz(small_distances);
+        end
+        
         %inliers_list(n,:) = small_distances;
         
     catch
+        n = n-1;
     end
     
     
 end
+% 
+% [~,maxIndex] = max(inliersCount);
+% 
+% randomMatches = randomMatchesList(:,:,maxIndex);
+% rand_points_1 = points1(1:2,randomMatches(1,:));
+% rand_points_2 = points2(1:2,randomMatches(2,:));
+% 
+% 
+% 
+% matched_points_1 = points1((1:2),matches(1,:));
+% matched_points_2 = points2((1:2),matches(2,:));
+% 
+% t = cp2tform(rand_points_2', rand_points_1', 'projective');
 
-[~,maxIndex] = max(inliersCount);
-
-randomMatches = randomMatchesList(:,:,maxIndex);
-rand_points_1 = points1(1:2,randomMatches(1,:));
-rand_points_2 = points2(1:2,randomMatches(2,:));
-
-
-
-matched_points_1 = points1((1:2),matches(1,:));
-matched_points_2 = points2((1:2),matches(2,:));
-
-t = cp2tform(rand_points_2', rand_points_1', 'projective');
-
-[trans_x,trans_y] = tformfwd(t,matched_points_1(1,:),matched_points_1(2,:));
+[trans_x,trans_y] = tformfwd(current_best_transform,matched_points_1(1,:),matched_points_1(2,:));
 
 %Calculate distance between the original_points in image 2 and the
 %transformed ones from image 1 to image 2
