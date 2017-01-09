@@ -4,11 +4,11 @@ run('vlfeat-0.9.20\toolbox\vl_setup.m');
 
 matchingThreshold = 1.5; % 1.5 is the default threshold
 baseInputPath = '../Resources/';
-nIter = 1000;
-dist_threshold = 30;
+nIter = 2000;
+dist_threshold = 3;
 
-image1 = im2single(rgb2gray(imread(strcat(baseInputPath,'campus1.jpg'))));
-image2 = im2single(rgb2gray(imread(strcat(baseInputPath,'campus2.jpg'))));
+image1 = im2single(rgb2gray(imread(strcat(baseInputPath,'campus4.jpg'))));
+image2 = im2single(rgb2gray(imread(strcat(baseInputPath,'campus5.jpg'))));
 
 [Points1,Descriptors1] = vl_sift(image1);
 [Points2,Descriptors2] = vl_sift(image2);
@@ -17,7 +17,6 @@ image2 = im2single(rgb2gray(imread(strcat(baseInputPath,'campus2.jpg'))));
 
 inliersCount = zeros(1,nIter);
 rand_matches_list = zeros(2,4,nIter);
-inliers_list = zeros(max(size(Points2,2),size(Points1,2)),2,nIter);
 
 for n=1:nIter
     try
@@ -31,9 +30,10 @@ for n=1:nIter
         matched_points_1 = Points1((1:2),matches(1,:));
         matched_points_2 = Points2((1:2),matches(2,:));
         
-        t = fitgeotrans(rand_points_2', rand_points_1', 'projective');
+        t = cp2tform(rand_points_2', rand_points_1', 'projective');
         
-        [trans_x,trans_y] = transformPointsForward(t,matched_points_1(1,:),matched_points_1(2,:));
+        
+        [trans_x,trans_y] = tformfwd(t,matched_points_1(1,:),matched_points_1(2,:));
         
         %Calculate distance between the original_points in image 2 and the
         %transformed ones from image 1 to image 2
@@ -70,9 +70,9 @@ rand_points_2 = Points2(1:2,rand_matches(2,:));
 matched_points_1 = Points1((1:2),matches(1,:));
 matched_points_2 = Points2((1:2),matches(2,:));
 
-t = fitgeotrans(rand_points_2', rand_points_1', 'projective');
+t = cp2tform(rand_points_2', rand_points_1', 'projective');
 
-[trans_x,trans_y] = transformPointsForward(t,matched_points_1(1,:),matched_points_1(2,:));
+[trans_x,trans_y] = tformfwd(t,matched_points_1(1,:),matched_points_1(2,:));
 
 %Calculate distance between the original_points in image 2 and the
 %transformed ones from image 1 to image 2
@@ -92,14 +92,17 @@ inliers_best_transform = matches(:,small_distances);
 all_inliers_1 = Points1(1:2,inliers_best_transform(1,:));
 all_inliers_2 = Points2(1:2,inliers_best_transform(2,:));
 
-
-best_transform = fitgeotrans(all_inliers_2', all_inliers_1', 'projective');
-
-
-
-B = imwarp(image1,best_transform);
-
-imshow(B);
+try
+    info = imfinfo(strcat(baseInputPath,'campus4.jpg'));
+    
+    best_transform = cp2tform(all_inliers_2', all_inliers_1', 'projective');
+    B = imtransform(image2,best_transform, 'XData',[1 info.Width], 'YData',[1 info.Height]);
+    
+    C = imfuse(image1,B,'diff');
+    imshow(C);
+catch
+    Stitching();
+end
 
 end
 
