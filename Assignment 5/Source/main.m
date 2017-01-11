@@ -1,8 +1,9 @@
 run('..\..\vlfeat-0.9.20\toolbox\vl_setup.m');
 
-folder = '../Resources/train/';
+trainSetFolder = '../Resources/train/';
+testSetFolder = '../Resources/test/';
 clusterCount = 50;
 
-vocabulary = BuildVocabulary(folder, clusterCount);
-[training, group] = BuildKNN(folder, vocabulary);
-confusionMatrix = ClassifyImages(folder, vocabulary, training, group);
+vocabulary = BuildVocabulary(trainSetFolder, clusterCount);
+[training, group] = BuildKNN(trainSetFolder, vocabulary);
+confusionMatrix = ClassifyImages(testSetFolder, vocabulary, training, group);
