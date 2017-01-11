@@ -46,11 +46,6 @@ for n = 1 : iterationCount
         %Count number of times dist > threshold (5)
         
         small_distances = distances < distanceThreshold;
-        
-        %Save result to inliers and inliers_list
-        
-        inliersCount(n) = nnz(small_distances);
-        
         if (nnz(small_distances) > current_best_score)
             current_best_transform = t;
             current_best_score = nnz(small_distances);
@@ -64,19 +59,7 @@ for n = 1 : iterationCount
     
     
 end
-% 
-% [~,maxIndex] = max(inliersCount);
-% 
-% randomMatches = randomMatchesList(:,:,maxIndex);
-% rand_points_1 = points1(1:2,randomMatches(1,:));
-% rand_points_2 = points2(1:2,randomMatches(2,:));
-% 
-% 
-% 
-% matched_points_1 = points1((1:2),matches(1,:));
-% matched_points_2 = points2((1:2),matches(2,:));
-% 
-% t = cp2tform(rand_points_2', rand_points_1', 'projective');
+
 
 [trans_x,trans_y] = tformfwd(current_best_transform,matched_points_1(1,:),matched_points_1(2,:));
 
@@ -101,13 +84,19 @@ try
     [height, width] = size(image1);
     
     best_transform = cp2tform(all_inliers_2', all_inliers_1', 'projective');
-    B = imtransform(image2,best_transform, 'XData',[1 width], 'YData',[1 height]);
     
-    C = imfuse(image1, B, 'diff');
-    imshow(C);
-catch 
+    if isempty(best_transform)
+        matching(images, matchingThreshold, distanceThreshold, iterationCount);
+    end
+%     
+%     B = imtransform(image2,best_transform, 'XData',[1 width], 'YData',[1 height]);
+%     
+%     C = imfuse(image1, B, 'diff');
+%     imshow(C);
+catch
     matching(images, matchingThreshold, distanceThreshold, iterationCount);
 end
+
 
 end
 
