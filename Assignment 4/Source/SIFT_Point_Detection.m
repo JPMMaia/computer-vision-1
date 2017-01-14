@@ -13,8 +13,8 @@ imshow(image1);
 
 [matches, scores] = vl_ubcmatch(da,db);
 
-matches1 = fa(1:2,matches(1,1:60));
-matches2 = fb(1:2,matches(2,1:60));
+matches1 = fa(1:2,matches(1,:));
+matches2 = fb(1:2,matches(2,:));
 match_plot(image1,image2,matches1',matches2');
 
 %vl_plotframe(F1);
