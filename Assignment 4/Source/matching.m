@@ -80,6 +80,9 @@ inliers_best_transform = matches(:,small_distances);
 
 all_inliers_1 = points1(1:2,inliers_best_transform(1,:));
 all_inliers_2 = points2(1:2,inliers_best_transform(2,:));
+
+match_plot(image2,image1,all_inliers_2',all_inliers_1');
+
 try
     [height, width] = size(image1);
     
