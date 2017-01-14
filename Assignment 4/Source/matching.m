@@ -1,4 +1,4 @@
-function best_transform = matching (images, matchingThreshold, distanceThreshold, iterationCount)
+function finalHomography = matching (images, matchingThreshold, distanceThreshold, iterationCount)
 
 image1 = images{1};
 image2 = images{2};
@@ -10,93 +10,24 @@ image2 = images{2};
 % Match the descriptors:
 [matches, scores] = vl_ubcmatch(descriptors1, descriptors2, matchingThreshold);
 
-inliersCount = zeros(1,iterationCount);
-randomMatchesList = zeros(2,4,iterationCount);
+% Find the correspence between matched points in the two images:
+matchedPoints1 = points1(:, matches(1, :));
+matchedPoints2 = points2(:, matches(2, :));
 
-% Number of matches:
-matchCount = size(matches, 2);
+% Plot matches:
+match_plot(image1, image2, matchedPoints1(1:2, :)', matchedPoints2(1:2, :)');
 
-current_best_transform = -1;
-current_best_score = 0;
+% Apply the RANSAC scheme to estimate the homography between the first and
+% the second image:
+[finalHomography, inliersMatchedPoints1, inliersMatchedPoints2] = ransac(matchedPoints1(1:2, :)', matchedPoints2(1:2, :)', distanceThreshold, iterationCount);
 
-for n = 1 : iterationCount
-    
-    try
-        
-        % Randomly choose 4 matches:
-        randomMatches = matches(:, randsample(matchCount, 4));
-        randomMatchesList(:,:,n) = randomMatches;
-        
-        rand_points_1 = points1(1:2,randomMatches(1,:));
-        rand_points_2 = points2(1:2,randomMatches(2,:));
-        t = cp2tform(rand_points_2', rand_points_1', 'projective');
-        
-        matched_points_1 = points1((1:2),matches(1,:));
-        matched_points_2 = points2((1:2),matches(2,:));
-        [trans_x,trans_y] = tformfwd(t,matched_points_1(1,:),matched_points_1(2,:));
-        
-        %Calculate distance between the original_points in image 2 and the
-        %transformed ones from image 1 to image 2
-        original_points = [matched_points_2(1,:)',matched_points_2(2,:)'];
-        transformed_points = [trans_x',trans_y'];
-        
-        difference = original_points - transformed_points;
-        distances = sqrt(sum(difference.^2,2))./2;
-        
-        %Count number of times dist > threshold (5)
-        
-        small_distances = distances < distanceThreshold;
-        if (nnz(small_distances) > current_best_score)
-            current_best_transform = t;
-            current_best_score = nnz(small_distances);
-        end
-        
-        %inliers_list(n,:) = small_distances;
-        
-    catch
-        n = n-1;
-    end
-    
-    
-end
+% Plot matches of inliers:
+match_plot(image1, image2, inliersMatchedPoints1, inliersMatchedPoints2);
 
-
-[trans_x,trans_y] = tformfwd(current_best_transform,matched_points_1(1,:),matched_points_1(2,:));
-
-%Calculate distance between the original_points in image 2 and the
-%transformed ones from image 1 to image 2
-original_points = [matched_points_2(1,:)',matched_points_2(2,:)'];
-transformed_points = [trans_x',trans_y'];
-
-difference = original_points - transformed_points;
-distances = sqrt(sum(difference.^2,2))./2;
-
-%Count number of times dist > threshold (5)
-
-small_distances = distances < distanceThreshold;
-
-inliers_best_transform = matches(:,small_distances);
-
-
-all_inliers_1 = points1(1:2,inliers_best_transform(1,:));
-all_inliers_2 = points2(1:2,inliers_best_transform(2,:));
-try
-    [height, width] = size(image1);
-    
-    best_transform = cp2tform(all_inliers_2', all_inliers_1', 'projective');
-    
-    if isempty(best_transform)
-        matching(images, matchingThreshold, distanceThreshold, iterationCount);
-    end
-%     
-%     B = imtransform(image2,best_transform, 'XData',[1 width], 'YData',[1 height]);
-%     
-%     C = imfuse(image1, B, 'diff');
-%     imshow(C);
-catch
-    matching(images, matchingThreshold, distanceThreshold, iterationCount);
-end
-
+% Plot the absolute differences between the two images:
+transformedImage1 = imtransform(image1, finalHomography, 'XData', [1 size(image2, 2)], 'YData', [1 size(image2, 1)], 'XYScale', [1.0, 1.0]);
+differences = imfuse(image2, transformedImage1, 'diff');
+imshow(differences);
 
 end
 

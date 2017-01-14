@@ -16,8 +16,8 @@ filenames = [ ...
     ];
 
 % Defining parameters:
-matchingThreshold = 1.1;
-distanceThreshold = 10;
+matchingThreshold = 1.5;
+distanceThreshold = 5;
 iterationCount = 1000;
 
 % Load images and convert them to grayscale:
