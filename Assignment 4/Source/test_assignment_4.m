@@ -1,7 +1,7 @@
 function test_assignment_4()
 
 % Load vlfeat:
-run('vlfeat-0.9.20\toolbox\vl_setup.m');
+run('..\..\vlfeat-0.9.20\toolbox\vl_setup.m');
 
 % Defining folders for input and output images:
 baseInputPath = '../Resources/';
