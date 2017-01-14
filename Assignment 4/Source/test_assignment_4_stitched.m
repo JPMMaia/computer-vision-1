@@ -39,10 +39,10 @@ for i = 1 : imagesCount
     
 end
 
-images12 = { images{2},images{1} };
-images23 = { images{3},images{2} };
-images43 = {images{3},images{4}};
-images54 = {images{4},images{5}};
+images12 = { images{1},images{2} };
+images23 = { images{2},images{3} };
+images43 = {images{4},images{3}};
+images54 = {images{5},images{4}};
 
 % Apply the matching algorithm to the images:
 transform12 = matching(images12, matchingThreshold, distanceThreshold, iterationCount);
@@ -83,12 +83,15 @@ nTform = maketform('projective',eye(3));
 
 transformed1 = imtransform(colorimages{1},transform13,'XData',[min_x,max_x],'YData',[min_y,max_y]);
 transformed2 = imtransform(colorimages{2},transform23,'XData',[min_x,max_x],'YData',[min_y,max_y]);
-transformed3 = imtransform(colorimages{3},nTform,'XData',[min_x,max_x*2],'YData',[min_y,max_y]);
+transformed3 = imtransform(colorimages{3},nTform,'XData',[min_x,max_x],'YData',[min_y,max_y]);
 transformed4 = imtransform(colorimages{4},transform43,'XData',[min_x,max_x],'YData',[min_y,max_y]);
 transformed5 = imtransform(colorimages{5},transform53,'XData',[min_x,max_x],'YData',[min_y,max_y]);
 
+imshow(imfuse(imfuse(imfuse(imfuse(transformed2,transformed3),transformed4),transformed1),transformed5));
 
-imshow(imfuse(imfuse(imfuse(imfuse(transformed2,transformed3,'blend'),transformed4,'blend'),transformed1,'blend'),transformed5,'blend'));
+final = transformed1 +transformed5+transformed4+transformed3+transformed2;
+
+imshow(final);
 end
 
 

@@ -39,10 +39,10 @@ for i = 1 : imagesCount
     
 end
 
-images12 = { images{2},images{1} };
-images23 = { images{3},images{2} };
-images43 = {images{3},images{4}};
-images54 = {images{4},images{5}};
+images12 = { images{1},images{2} };
+images23 = { images{2},images{3} };
+images43 = {images{4},images{3}};
+images54 = {images{5},images{4}};
 
 % Apply the matching algorithm to the images:
 transform12 = matching(images12, matchingThreshold, distanceThreshold, iterationCount);
