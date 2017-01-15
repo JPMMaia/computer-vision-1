@@ -52,7 +52,7 @@ for i = 1 : homographiesCount
 end
 
 % Compute stitching of images:
-stitchedImage = stitching(coloredImages, homographies, false);
+stitchedImage = stitching(coloredImages, homographies, true);
 imshow(stitchedImage);
 
 end
