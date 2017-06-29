@@ -18,7 +18,7 @@ MATLAB
 
 ## Built With
 
-* [VLFeat](www.vlfeat.org/) - Open-source computer vision library
+* [VLFeat](http://www.vlfeat.org/) - Open-source computer vision library
 
 ## Authors
 
