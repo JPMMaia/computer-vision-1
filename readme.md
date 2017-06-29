@@ -8,10 +8,6 @@ This project contains the source code of five different assignments done for a c
 4. Image stitching using SIFT features.
 5. Scene recognition using a bag of visual words and SIFT features.
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 MATLAB
