@@ -8,10 +8,6 @@ This project contains the source code of five different assignments done for a c
 4. Image stitching using SIFT features.
 5. Scene recognition using a bag of visual words and SIFT features.
 
-### Prerequisites
-
-
-
 ## Built With
 
 * [MATLAB](https://www.mathworks.com) 
