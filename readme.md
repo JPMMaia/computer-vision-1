@@ -10,10 +10,11 @@ This project contains the source code of five different assignments done for a c
 
 ### Prerequisites
 
-MATLAB
+
 
 ## Built With
 
+* [MATLAB](https://www.mathworks.com) 
 * [VLFeat](http://www.vlfeat.org/) - Open-source computer vision library
 
 ## Authors
