@@ -58,7 +58,7 @@ Example output:
 
 <a href="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%203/Output/output-1-cut.png"><img src="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%203/Output/output-1-cut.png" width="512"></a>
 
-#### Assignment 4 -Laplacian blob detector
+#### Assignment 4 - Image stitching
 
 Example input:
 
