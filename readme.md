@@ -14,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* MATLAB along with the Statistics and Machine Learning Toolbox
+* MATLAB along with the *Image Processing Toolbox* and the *Statistics and Machine Learning Toolbox*
 
 ### Usage
 
