@@ -8,11 +8,11 @@ baseInputPath = '../Resources/';
 
 % Defining filenames:
 filenames = [ ...
-    {'campus1.jpg'} ;
-    {'campus2.jpg'} ;
-    {'campus3.jpg'} ;
-    {'campus4.jpg'} ;
-    {'campus5.jpg'} ;
+    {'officeview1.jpg'} ;
+    {'officeview2.jpg'} ;
+    {'officeview3.jpg'} ;
+    {'officeview4.jpg'} ;
+    {'officeview5.jpg'} ;
     ];
 
 % Defining parameters:
