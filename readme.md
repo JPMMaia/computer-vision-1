@@ -56,7 +56,7 @@ Example input:
 
 Example output:
 
-<a href="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%203/Output/output-1.png"><img src="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%203/Output/output-1.png" width="512"></a>
+<a href="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%203/Output/output-1-cut.png"><img src="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%203/Output/output-1-cut.png" width="512"></a>
 
 #### Assignment 4 -Laplacian blob detector
 
@@ -73,6 +73,8 @@ Example input:
 <a href="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%204/Resources/officeview5.jpg"><img src="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%204/Resources/officeview5.jpg" width="128"></a>
 
 Example output:
+
+<a href="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%204/Output/output-2.png"><img src="https://raw.githubusercontent.com/JPMMaia/computer-vision-1/master/Assignment%204/Output/output-2.png" width="512"></a>
 
 #### Assignment 5 - Scene recognition
 
